@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<body style="background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) ; background-attachment: fixed ;background-size: cover; color: gray; ">
+    <style>
+        a {text-decoration: none;
+        color: wheat;}
+    </style>
+<section style="display: grid; width:60%; margin:auto;">
+
+    <h1 style="text-align: center; font-size:50px ;">Page d'accueil des admin</h1>
+<hr>
+<h2><a href="onglet/diffuse">Modifier la page d'accueil</a></h2>
+<hr>
+<h2><a href="onglet/">Creer un onglet special</a></h2>
+<hr>
+<h2><a href="serie/">Ajouter une nouvelle serie</a></h2>
+<h3 style="text-align: center; font-size:50px ;">Modifier une serie deja existente</h3>
+<ul>
+    {% for elem in videos %}
+    <li><a href="serie/{{elem.id}}/">{{elem.name}}</a></li>
+    {% endfor %}
+</ul>
+
+</section>
+</body>
+{% endblock content %}

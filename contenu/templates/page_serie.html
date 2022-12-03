@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if serie.background_tof %}
+<style>
+    #shadow{--color_anime2 : {{serie.couleur}};}
+   .carte{text-decoration: none;
+   background-color: black;
+   color: white;
+   padding: 5px 20px; border-radius: 10px;
+   scale: 0.7;
+font-size: 15px;}
+   .carte:hover{
+        background-color: rgb(83, 79, 79);
+        font-weight: bolder;
+}
+@media (max-width: 1000px) {
+   
+    body{
+        background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) !important; 
+    }
+    .wrapper{
+        --color_anime2 : {{serie.couleur}};
+        background-image: linear-gradient(to bottom right, var(--color_anime2), black);
+    }
+    #shadow{
+        box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+    }
+    }
+    #shadow{
+        --color_anime2 : {{serie.couleur}};
+    }
+</style>
+<body id="back" style="background-image: linear-gradient(rgba(27, 2, 2, 0.5), rgba(31, 1, 1, 0.5)), url({{serie.background_tof.url}}) ;
+background-attachment: fixed ;background-size: cover; background-repeat: no-repeat;
+background-position: center enter; background-attachment: fixed;">
+    {% else %}
+    <body style="background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) ; background-attachment: fixed ;background-size: cover; ">
+    {% endif %}
+    <script>
+        function selection(){
+            var input ;
+            input = document.getElementById('my_option') ;
+            choix = input.options[input.selectedIndex].text
+    
+        function filtrage(choix){
+            var epi = document.getElementsByClassName('wrapper') ;   
+            var sais = document.getElementsByClassName('saison')  ;
+            if (window.innerWidth > 1000){
+            var b = 'flex' ;
+            }else{
+            var b = 'grid'
+            }
+            if(choix === ''){
+                for(i = 0 ; i < epi.length ; i++){
+                    epi[i].style.display = b ;
+                }
+                return ;
+            }
+            for(i = 0 ; i < epi.length ; i++){
+                epi[i].style.display = 'none' ;
+            }
+            var text ;
+            for(i = 0 ; i < sais.length ; i++){
+                if(sais[i].textContent === choix ){
+                    epi[i].style.display = b ;
+                }
+            }
+            document.getElementById('test').innerHTML = text  ;       
+            document.getElementById('test').style.backgroundColor = 'lightblue' ;
+            return ;    
+        }
+        filtrage(choix) ;
+
+    }
+    </script>
+
+<h1 id="toph" style="text-align: center; font-size: 70px; padding: 250px 0px;">{{serie.name}}</h1> 
+
+<div class="topnav" id="myTopnav">
+    <a href="{% url 'redirect' 'home' %}" class="active"><i class="fa-solid fa-house-chimney-window "></i><span> Home</span></a>
+    <a href="{% url 'agenda' %}"><i class="fa-regular fa-calendar-days "></i><span> Agenda</span></a>
+    <a href="{% url 'redirect' 'Film' %}"><i class="fa-solid fa-clapperboard"></i><span> Film</span></a>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="menu()"><i class="fa-brands fa-ioxhost "></i> Categories</button>
+      <section class="dropdown-content" id="myDropdown">
+        <div style="flex: 1;">
+            <a href="{% url 'redirect' 'Action' %}">Action</a>
+      <a href="{% url 'redirect' 'Aventure' %}">Aventure</a>
+      <a href="{% url 'redirect' 'Mystere' %}">Mystere</a>
+      <a href="{% url 'redirect' 'Horreur' %}"></i> Horreur</a>
+      <a href="{% url 'redirect' 'Comedie' %}">Comedie</a>
+      <a href="{% url 'redirect' 'Isekai' %}">Isekai</a>
+    </div><div style="flex: 2;">
+        <a href="{% url 'redirect' 'Drama' %}">Drama</a>
+        <a href="{% url 'redirect' 'Romance' %}">Romance</a>
+      <a href="{% url 'redirect' 'Slice of life' %}">Slice of life</a>
+      <a href="{% url 'redirect' 'Sci-fi' %}">Sci-fi</a>
+      <a href="{% url 'redirect' 'Seinen' %}">Seinen</a>
+      <a href="{% url 'redirect' 'Shonen' %}">Shonen</a>
+    </div>
+      </section>
+    </div> 
+    <a><span><i class="fa-solid fa-magnifying-glass"></i> Voir tout</span></a>
+    <a href="{% url 'login' %}"><span><i class="fa-solid fa-user"></i> Log in</span></a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="menu2()">&#9776;</a>
+  </div>
+
+<!--The top side is up, bottom side down-->
+
+<section style="display: grid; width: 100% ; margin:auto; ">
+
+<div class="grid_container_top">
+    <div><img src="{{serie.tof_url.url}}"></div>
+    <div> <h2>{{serie.name}}</h2>
+    <p style="font-size: 20px; ">{{serie.lesstext}} <span id="more">{{serie.moretext}}</span> <span style="font-weight: bold;" id="points" onclick="text()">show more...</span></p>
+    <h2 ><a class="carte" href="{% url 'redirect' genre=serie.genre_1 %}">{{serie.genre_1}}  </a>
+        <a class="carte" href="{% url 'redirect' genre=serie.genre_2 %}">{{serie.genre_2}}  </a>
+        <a class="carte" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_3}}</a>
+        <a class="carte" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_4}}</a></h2>
+</div>
+</div>
+
+
+
+
+
+
+
+<div style=" font-family: Verdana, Geneva, Tahoma, sans-serif ; font-size : 20px ; color : whitesmoke; border: solid rgb(42, 41, 41); margin: 10px auto; padding : 10px 65px ; border-radius: 100px; 
+background-color: rgba(26, 28, 28, 0.7); ">
+    <label for="my_option">saison</label>
+    <select id="my_option" onchange="selection()">
+        <option></option>
+        {% for x in saison %}
+        <option>{{x}}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+
+
+<!--button onclick="filtrage()">click ici pour tester</button>
+<h4 id="test">la zone de test</h4-->
+
+
+
+<section class="grid_container">
+{% for epi in episodes  %}
+{% if epi.saison %}
+<div>
+<div class="wrapper">
+    <a href="{{epi.ref}}/"><div style="pointer-events: none; outline: none; border: none;"><iframe src={{epi.url|safe}} allowfullscreen frameBorder="0"></iframe></div ></a>
+    <div>
+    <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size :80% ;">{{serie.name}}</h3>
+    <h3> saison <span class="saison">{{epi.saison}}</span> episode {{epi.episode}}</h3>    
+{% else %}
+<h3>{{serie.name}}</h3> 
+    <h3>episode {{epi.episode}}</h3> 
+{% endif %}
+    </div>
+
+
+</div>
+</div>
+{% endfor %}
+</section>
+</section>
+<footer style="background-image:radial-gradient(rgba(2, 2, 33, 0.808), rgba(0, 0, 0, 0.301))">
+    <section class="end">
+        <div>
+    <h2>Contact</h2>
+    <h3>Rejoignez notre discord</h3>
+    <h3>Faire un don Paypal</h3>
+        </div><div>
+    <h2>Partager</h2>
+    <h3>Whatsapp</h3>
+    <h3>Facebook</h3>
+    </div><div>
+    <h2>Signaler un bug</h2>
+    <h3>Envoyer un mail</h3>
+    <h3>Contacter directement si urgent</h3>
+    </div>
+    </section>
+    </footer>
+</body>
+
+<!--a href="https://imgbox.com/UofsDPd9" target="_blank"><img src="https://thumbs2.imgbox.com/3e/77/UofsDPd9_t.jpg" alt="image host"/></a-->
+{% endblock content %}

@@ -1,2 +1,2 @@
-# buushido
-new test for animeni
+# AnimeniFinal
+Modern streaming service with modern functionality and interface for Malian anime fan.

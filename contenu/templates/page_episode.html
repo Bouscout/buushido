@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if serie.background_tof %}
+<body style="background-image: linear-gradient(rgba(27, 2, 2, 0.5), rgba(31, 1, 1, 0.5)), url({{serie.background_tof.url}}) ;
+background-attachment: fixed ;
+    background-size: cover;">
+    {% else %}
+    <body style="background-image: linear-gradient(to bottom, rgb(29, 29, 39), rgb(3, 3, 3)) ;">
+    {% endif %}
+    <div class="topnav" id="myTopnav">
+        <a href="{% url 'redirect' 'home' %}" class="active"><i class="fa-solid fa-house-chimney-window "></i><span> Home</span></a>
+        <a href="{% url 'agenda' %}"><i class="fa-regular fa-calendar-days "></i><span> Agenda</span></a>
+        <a href="{% url 'redirect' 'Film' %}"><i class="fa-solid fa-clapperboard"></i><span> Film</span></a>
+        <div class="dropdown">
+          <button class="dropbtn" onclick="menu()"><i class="fa-brands fa-ioxhost "></i> Categories</button>
+          <section class="dropdown-content" id="myDropdown">
+            <div style="flex: 1;">
+                <a href="{% url 'redirect' 'Action' %}">Action</a>
+          <a href="{% url 'redirect' 'Aventure' %}">Aventure</a>
+          <a href="{% url 'redirect' 'Mystere' %}">Mystere</a>
+          <a href="{% url 'redirect' 'Horreur' %}"></i> Horreur</a>
+          <a href="{% url 'redirect' 'Comedie' %}">Comedie</a>
+          <a href="{% url 'redirect' 'Isekai' %}">Isekai</a>
+        </div><div style="flex: 2;">
+            <a href="{% url 'redirect' 'Drama' %}">Drama</a>
+            <a href="{% url 'redirect' 'Romance' %}">Romance</a>
+          <a href="{% url 'redirect' 'Slice of life' %}">Slice of life</a>
+          <a href="{% url 'redirect' 'Sci-fi' %}">Sci-fi</a>
+          <a href="{% url 'redirect' 'Seinen' %}">Seinen</a>
+          <a href="{% url 'redirect' 'Shonen' %}">Shonen</a>
+        </div>
+          </section>
+        </div> 
+        <a href="{% url 'tout' %}"><span><i class="fa-solid fa-magnifying-glass"></i> Voir tout</span></a>
+        <a href="{% url 'login' %}"><span><i class="fa-solid fa-user"></i> Log in</span></a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="menu2()">&#9776;</a>
+      </div>
+    
+
+<!--The top side is up, bottom side down-->
+
+
+
+
+
+{% for epi in episodes %}
+{% if epi.ref == id %}
+<style>
+    @media (max-width: 1000px) {
+    #epi_top{
+        top :0 ;
+        position: sticky;
+        z-index: 20;
+    }
+    body{
+        background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) !important; 
+    }
+    .wrapper{
+        --color_anime2 : {{serie.couleur}};
+        background-image: linear-gradient(to bottom right, var(--color_anime2), black);
+    }.episode{background-color: black; border: none;}
+    #shadow{
+        box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+    }
+    }
+    #shadow{
+        --color_anime2 : {{serie.couleur}};
+    }
+</style>
+<section id="epi_top">
+<div style="position: relative;;width:100% ;height:100% ; margin:auto;  padding-bottom: 56.25%; font-family: Verdana, Geneva, Tahoma, sans-serif;">    
+    <iframe style="width: 100%; height: 100% !important; position: absolute;" height="100%" width="100%" frameBorder="0" seamless="" allowfullscreen src={{epi.url|safe}}></iframe>
+    <div style="width: 80px; height: 80px; position: absolute; opacity: 0; right: 0px; top: 0px;">&nbsp;</div>
+</div>
+</section>
+<section class="episode_rond">
+    <div class="episode">
+        {% if end != 3 %}
+        <a href="previous/"><button style="border-radius: 60px; color:whitesmoke;background-color: black;">episode precedent</button></a>
+        {% endif %}
+        <a href="accueil/"><button style="border-radius: 60px; color:whitesmoke;background-color: black;">Accueil Serie</button></a>
+        {% if end != 2 %}
+        <a href="next/"><button style="border-radius: 60px; color:whitesmoke;background-color: black;">prochain episode</button></a>
+        {% endif %}
+    </div>
+</section>
+    <h2 style="font-size: 20px; font-weight: bolder; text-align: center ;">{{epi.nom}} saison {{epi.saison}} episode {{epi.episode}}</h2>
+
+
+
+
+
+{% endif %}
+{% endfor %}
+
+
+
+
+
+
+<!--button onclick="filtrage()">click ici pour tester</button>
+<h4 id="test">la zone de test</h4-->
+
+<section class="grid_container">
+{% for episode in episodes  %}
+{% if episode.saison %}
+<div class="wrapper">
+    <a href="{{episode.ref}}/"><div id="shadow"><div style="pointer-events: none;"><iframe src={{episode.url|safe}} frameBorder="0"></iframe></div></div ></a>
+    <div>
+    <h3 style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size :80% ;">{{serie.name}}</h3>
+    <h4> saison <span class="saison">{{episode.saison}}</span> episode {{episode.episode}}</h4> 
+    
+{% else %}
+<h3>{{serie.name}}</h3> 
+    <h4>episode {{episode.episode}}</h4> 
+{% endif %}
+    </div>
+
+</div>
+{% endfor %}
+<!--iframe src="https://drive.google.com/file/d/1KwfTfnztz-p5YVOPqu96BhgSgpuRq6N7/preview"  allow="autoplay" allowfullscreen="allowfullscreen"></iframe-->
+</section>
+
+<footer>
+    <section class="end" style="background-image:linear-gradient(to bottom, rgba(6, 1, 40, 0.477), black);">
+        <div>
+    <h2>Contact</h2>
+    <h3>Rejoignez notre discord</h3>
+    <h3>Faire un don Paypal</h3>
+        </div><div>
+    <h2>Partager</h2>
+    <h3>Whatsapp</h3>
+    <h3>Facebook</h3>
+    </div><div>
+    <h2>Signaler un bug</h2>
+    <h3>Envoyer un mail</h3>
+    <h3>Contacter directement si urgent</h3>
+    </div>
+    </section>
+    </footer>
+</body>
+
+<!--a href="https://imgbox.com/UofsDPd9" target="_blank"><img src="https://thumbs2.imgbox.com/3e/77/UofsDPd9_t.jpg" alt="image host"/></a-->
+{% endblock content %}
