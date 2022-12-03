@@ -140,3 +140,10 @@ grid-template-rows: auto auto;
 .carte:hover + .info{
     display: grid;
    }
+
+   #name{
+    min-height: 100px;
+}
+@media screen and (max-width: 1000px) {
+#name{min-height: 50px;}
+}

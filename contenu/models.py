@@ -30,6 +30,8 @@ class video(models.Model):
         ('Seinen', 'Seinen'),
         ('Isekai', 'Isekai'),
         ('Shonen', 'Shonen'),
+        ('Sport', 'Sport'),
+        ('Autres', 'Autres'),
         ('Film', 'Film'),
     )
     genre_1 = models.CharField('genre', max_length = 50, choices= genre_choix, default= "specifiez le genre d'animé s'il vous plait")
@@ -38,8 +40,7 @@ class video(models.Model):
     genre_4 = models.CharField('genre', max_length = 50, choices= genre_choix, blank = True, null= True)
     genres = models.CharField(max_length = 200, blank = True, null = True)  
 
-    class Meta:
-        unique_together = ('genre_1', 'genre_2','genre_3','genre_4', )  
+    
     def __str__(self):
         return str(self.name)
     def naming(self):

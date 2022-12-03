@@ -95,35 +95,38 @@ def ajouter_plusieurs_episode(request, id):
 def poster_video(request):
     if request.user.is_friend != True:
         return redirect('home')
-    form = formulaire_video(request.POST or None)
-    if form.is_valid():
-        vid= form.save()
-        vid.posteur = request.user
-        vid.naming()
-        vid.text()
-        vid.framing_links()
-        vid.save()
-        print(vid.id)
-        return redirect('new_episodes', id=vid.id)
+    form = formulaire_video()
+    if request.method == 'POST':
+        form = formulaire_video(request.POST, request.FILES)
+        if form.is_valid():
+            vid= form.save(commit=False)
+            vid.posteur = request.user
+            vid.naming()
+            vid.text()
+            #vid.framing_links()
+            vid.save()
+            return redirect('new_episodes', id=vid.id)
     return render(request, 'postage.html', {'form2':form})
 
 def modifier_serie(request, id):
     if request.user.is_friend != True:
         return redirect('home')
     cas = get_object_or_404(video, pk=id)
-    form = formulaire_video(request.POST or None, instance=cas)
+    form = formulaire_video(instance=cas)
     form2 = supprimer_episode()
-    if form.is_valid():
-        vid= form.save()
-        vid.naming()
-        vid.text()
-        vid.save()
-    if 'supprimer' in request.POST:
-        form2 = supprimer_episode(request.POST)
-        if form2.is_valid():
-            cas.delete()
+    if request.method == 'POST':
+        form = formulaire_video(request.POST, request.FILES, instance=cas)
+        if form.is_valid():
+            vid= form.save(commit=False)
+            vid.naming()
+            vid.text()
+            vid.save()
             return redirect('gerant_accueil')
-        return redirect ('page_serie', id=id)
+        if 'supprimer' in request.POST:
+            form2 = supprimer_episode(request.POST)
+            if form2.is_valid():
+                cas.delete()
+                return redirect('gerant_accueil')
     return render(request, 'postage.html', {'form2':form, 'supprim':form2})
 
 def supprim_episode(request, id):

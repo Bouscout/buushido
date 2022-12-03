@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div id="vitrine" style="display: none;">
-  {% for elem in affiche.poster.all %}
-  <p class="para1">{{elem.background_tof.url}}</p>
-  <p class="para2">{{elem.tof_url.url}}</p>
-  {% endfor %}
-</div>
+
 <style>
   .carton{text-decoration: none;
    background-color: black;
@@ -17,8 +12,8 @@
         font-weight: bolder;}
     .onglet{border-radius: 0px;}
 </style>
-<!--body style="background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) ; background-attachment: fixed ;background-size: cover; "-->
-<style>
+<body style="background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) ; background-attachment: fixed ;background-size: cover; "-->
+<!--style>
   @keyframes space{
     0%  {background-image: url(/media/space.jpg) ; }
     25% {background-color : rgb(7, 4, 19) ;}
@@ -42,13 +37,13 @@ background-attachment: fixed ;
         
       <section id="gallerie2">
         {% for elem in affiche.poster.all %}
-        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.background_tof}}"></a></div>
+        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.background_tof.url}}"></a></div>
         {% endfor %}
       </section>
   
       <section id="gallerie" style="display: none;">
         {% for elem in affiche.poster.all %}
-        <div class="element"><img src="{{elem.tof_url}}"></div>
+        <div class="element"><img src="{{elem.tof_url.url}}"></div>
         {% endfor %}
       </section>
     </section>
@@ -98,7 +93,7 @@ background-attachment: fixed ;
 <div style="position: relative;">
 <div class="carte">
 <a href="{{serie.id}}/"><img title="{{serie.name}}"  src="{{serie.tof_url.url}}" alt="{{serie.name}}"></a>
-<h2 style="text-align: center;">{{serie.name}}</h2>
+<div id="name"><h2 style="text-align: center;">{{serie.name}}</h2></div>
 </div>
 <section class="info">
   <div>
