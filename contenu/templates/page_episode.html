@@ -1,5 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
+<script>
+    document.addEventListener('DOMContentLoaded', e=>{
+        var link = $('p').text() ;
+        var prim = $('#prim').text() ;
+        link = '' + link
+        function ios(){
+            return [
+                'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+    ].includes(navigator.platform)
+    // iPad on iOS 13 detection
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+}
+if (ios() == true){
+    $('#hidden').attr('src', link) ; 
+}else{
+    if (prim == 'None'){
+        $('#hidden').attr('src', link) ; 
+} 
+}             
+    })
+</script>
 {% if serie.background_tof %}
 <body style="background-image: linear-gradient(rgba(27, 2, 2, 0.5), rgba(31, 1, 1, 0.5)), url({{serie.background_tof.url}}) ;
 background-attachment: fixed ;
@@ -45,9 +71,13 @@ background-attachment: fixed ;
 
 {% for epi in episodes %}
 {% if epi.ref == id %}
+<p style="display: none;">{{epi.url2}}</p>
+<div id="prim">{{epi.url1}}</div>
 <style>
+    #epi_top{width: 85%; margin: auto;}
     @media (max-width: 1000px) {
     #epi_top{
+        width: 100%;
         top :0 ;
         position: sticky;
         z-index: 20;
@@ -60,16 +90,18 @@ background-attachment: fixed ;
         background-image: linear-gradient(to bottom right, var(--color_anime2), black);
     }.episode{background-color: black; border: none;}
     #shadow{
+        margin: 0px;
         box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
     }
     }
+    #shadow{margin: 20px;}
     #shadow{
         --color_anime2 : {{serie.couleur}};
     }
 </style>
 <section id="epi_top">
 <div style="position: relative;;width:100% ;height:100% ; margin:auto;  padding-bottom: 56.25%; font-family: Verdana, Geneva, Tahoma, sans-serif;">    
-    <iframe style="width: 100%; height: 100% !important; position: absolute;" height="100%" width="100%" frameBorder="0" seamless="" allowfullscreen src={{epi.url|safe}}></iframe>
+    <iframe id="hidden" style="width: 100%; height: 100% !important; position: absolute;" height="100%" width="100%" frameBorder="0" seamless="" allowfullscreen src={{epi.url|safe}}></iframe>
     <div style="width: 80px; height: 80px; position: absolute; opacity: 0; right: 0px; top: 0px;">&nbsp;</div>
 </div>
 </section>
@@ -101,25 +133,26 @@ background-attachment: fixed ;
 <!--button onclick="filtrage()">click ici pour tester</button>
 <h4 id="test">la zone de test</h4-->
 
-<section class="grid_container">
-{% for episode in episodes  %}
-{% if episode.saison %}
-<div class="wrapper">
-    <a href="{{episode.ref}}/"><div id="shadow"><div style="pointer-events: none;"><iframe src={{episode.url|safe}} frameBorder="0"></iframe></div></div ></a>
-    <div>
-    <h3 style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size :80% ;">{{serie.name}}</h3>
-    <h4> saison <span class="saison">{{episode.saison}}</span> episode {{episode.episode}}</h4> 
-    
-{% else %}
-<h3>{{serie.name}}</h3> 
-    <h4>episode {{episode.episode}}</h4> 
-{% endif %}
-    </div>
-
-</div>
-{% endfor %}
-<!--iframe src="https://drive.google.com/file/d/1KwfTfnztz-p5YVOPqu96BhgSgpuRq6N7/preview"  allow="autoplay" allowfullscreen="allowfullscreen"></iframe-->
-</section>
+    <section class="grid_container">
+        {% for epi in episodes  %}
+        {% if epi.saison %}
+        <div>
+        <div class="wrapper">
+            <div id="shadow"><a href="{{epi.ref}}/"><div style="pointer-events: none; outline: none; border: none;"><iframe src={{epi.url|safe}} allowfullscreen frameBorder="0"></iframe></div></a></div>
+            <div>
+            <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size :80% ;">{{serie.name}}</h3>
+            <h3> saison <span class="saison">{{epi.saison}}</span> episode {{epi.episode}}</h3>    
+        {% else %}
+        <h3>{{serie.name}}</h3> 
+            <h3>episode {{epi.episode}}</h3> 
+        {% endif %}
+            </div>
+        
+        
+        </div>
+        </div>
+        {% endfor %}
+        </section>
 
 <footer>
     <section class="end" style="background-image:linear-gradient(to bottom, rgba(6, 1, 40, 0.477), black);">

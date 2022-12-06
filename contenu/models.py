@@ -7,7 +7,6 @@ from colorfield.fields import ColorField
 
 class video(models.Model):
     name = models.CharField('nom', max_length=100)
-    #description= models.CharField(max_length= 200)
     tof_url = models.ImageField(upload_to='media/' , blank=True, null = True)
     background_tof = models.ImageField(upload_to='media/', blank=True, null=True)
     poster_tof = models.ImageField(upload_to='media/', blank=True, null=True)
@@ -34,19 +33,22 @@ class video(models.Model):
         ('Autres', 'Autres'),
         ('Film', 'Film'),
     )
-    genre_1 = models.CharField('genre', max_length = 50, choices= genre_choix, default= "specifiez le genre d'animé s'il vous plait")
+    genre_1 = models.CharField('genre', max_length = 50, choices= genre_choix, )
     genre_2 = models.CharField('genre', max_length = 50, choices= genre_choix, blank = True, null= True)
     genre_3 = models.CharField('genre', max_length = 50, choices= genre_choix, blank = True, null= True)
     genre_4 = models.CharField('genre', max_length = 50, choices= genre_choix, blank = True, null= True)
     genres = models.CharField(max_length = 200, blank = True, null = True)  
 
-    
+ 
+
     def __str__(self):
         return str(self.name)
     def naming(self):
         self.genres = str(f'{self.genre_1} {self.genre_2} {self.genre_3} {self.genre_4}')
 
     def text(self):
+        if len(str(self.lesstext)) > 50 :
+            return
         tr = str(self.description)
         mid = 0
         x = 200
@@ -75,17 +77,14 @@ class video(models.Model):
             self.poster_tof = 'https://drive.google.com/uc?export=view&id=' + third[32:65]
     
 
-'''def fullscreen(self):
-        transit = str(self.name)
-        transit = transit[:-10] + ' allowfullscreen="allowfullscreen"' + transit[-10:]
-        print(transit)
-        return transit''' 
+
 
 class la_video(models.Model):
     episode = models.PositiveIntegerField(verbose_name='===> Ecrivez le chiffre correspondant a l\'episode')
     saison = models.PositiveIntegerField('la saison correspondant a l\'episode',blank=True, null = True, default=1)
     nom = models.ForeignKey(video, on_delete=models.CASCADE, null=True)
     url = models.CharField(max_length = 200, blank=True, null = True)
+    url2 = models.CharField(max_length = 200, blank=True, null = True)
     ref = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
@@ -110,6 +109,24 @@ class la_video(models.Model):
                 break
         if b > a :
             self.url = obj[a:b]
+        if self.url2 :
+            obj = str(self.url2)
+            a=0
+            b=0
+            for i in range(len(obj[5:])) :
+                if obj[i-3] != 's':
+                    continue
+                if obj[i-3] + obj[i-2] + obj[i-1] + obj[i] == 'src=' :
+                    a = i + 2
+                    break
+            for x in range(a+10, len(obj[5:])):
+                if obj[x] == ' ' :
+                    b = x-1
+                    break
+            if b > a :
+                self.url2 = obj[a:b]
+
+
         
         
 # Create your models here.

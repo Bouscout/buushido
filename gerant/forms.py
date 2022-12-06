@@ -44,9 +44,9 @@ class formulaire_video(forms.ModelForm):
     widget=forms.TextInput(attrs={'type': 'color'}))
     class Meta:
         model = video
-        fields= ['name', 'posteur', 'genre_1', 'genre_2', 'genre_3','genre_4','couleur', 'tof_url', 'background_tof', 'description',]
+        fields= ['name', 'posteur', 'genre_1', 'genre_2', 'genre_3','genre_4','couleur', 'tof_url', 'background_tof', 'description', 'lesstext', 'moretext',]
 
 class formulaire_episode(forms.ModelForm):
     class Meta:
         model = la_video
-        fields = ['episode', 'saison', 'url']
+        fields = ['episode', 'url', 'url2']

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "colorfield",
     "gerant" ,
     "whitenoise.runserver_nostatic" ,
+    "django_extensions" ,
 ]
 
 MIDDLEWARE = [

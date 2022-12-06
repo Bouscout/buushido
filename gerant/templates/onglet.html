@@ -8,9 +8,9 @@
 <section style="display: grid; width:60%; margin:auto;">
 <h2> formulaire pour onglet</h2>
 {% if onglets %}
-<h2>Les onglets deja disponibles</h2>
+<h2 style="text-align: center; font-size:30px ;">Les onglets deja disponibles</h2>
 {% for x in onglets %}
-<a href="{{x.id}}/"><h2>en voici un: {{x.name}}</h2></a>
+<a href="{{x.id}}/"><h2>Onglet : {{x.name}}</h2></a>
 {% endfor %}
 {% endif %}
 

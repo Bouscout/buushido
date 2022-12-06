@@ -32,18 +32,24 @@
 background-attachment: fixed ;
     background-size: cover;
     animation: space 20s ease-in-out 0s infinite  alternate ;"--> 
-     
+     <style>
+      @keyframes move {
+  from{  background-image: url(/media/space.jpg) ; }
+   to { background-image: url(/media/moon.jpg) ; }
+
+}
+     </style>
     <section id="the_head" style="text-align: center; animation: move 10s ease-in-out 2s infinite alternate ;">
         
       <section id="gallerie2">
         {% for elem in affiche.poster.all %}
-        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.background_tof.url}}"></a></div>
+        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.poster_tof.url}}"></a></div>
         {% endfor %}
       </section>
   
       <section id="gallerie" style="display: none;">
         {% for elem in affiche.poster.all %}
-        <div class="element"><img src="{{elem.tof_url.url}}"></div>
+        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.tof_url.url}}"></a></div>
         {% endfor %}
       </section>
     </section>
@@ -84,7 +90,7 @@ background-attachment: fixed ;
 
   <!-------------------------------------->  
   <!--iframe src="https://embed.lottiefiles.com/animation/127647"></iframe-->   
-  <section style="display: grid; width: 100%; margin: auto;">               
+  <section id="pc_view" style="display: grid; width: 100%; margin: auto;">               
   {% for onglet in affiche.to_display.all %}
 <section id="ong" style="display: grid; grid-template-rows:auto auto; gap: 0.5px;  margin: auto; width: 100%;">
 <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1; margin-bottom: -20px; ">{{onglet.name}}</h2>
@@ -110,7 +116,38 @@ background-attachment: fixed ;
 <hr style="background-color:rgba(57, 57, 60, 0.685); width:70% ;">
 {% endfor %}
   </section>
-<hr>
+
+<!--Petit onglet-->
+<section id="mob_view" style="display:none; width:100%; margin:auto;" >
+  {% for onglet in affiche.to_display.all %}
+  {% if onglet.name == 'Comedie'%}
+  <section style="display:grid; grid-template-rows:auto auto; width:100%; margin:auto; gap:o.5rem;">
+    <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1; margin-bottom: -20px; ">Tendances</h2>
+    <div class="onglet" style="grid-row: 2;">
+      {% for elem in affiche.poster.all %}
+    <div class="carte">
+      <a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.tof_url}}"></a>
+      <div id="name"><h2 style="text-align: center;">{{elem.name}}</h2></div>
+    </div>
+    {% endfor %}
+    </div>
+  </section>
+
+  {% endif %}
+  <section style="display: grid; grid-template-rows:auto auto; margin-top: -35px;">
+    <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1; margin-bottom: -20px; ">{{onglet.name}}</h2>
+  <div class="petit_onglet" style="grid-row: 2;">
+    {% for serie in onglet.onglet1.all %}
+    <div class="petite_carte">
+      <a href="{{serie.id}}/"><img title="{{serie.name}}"  src="{{serie.tof_url}}" alt="{{serie.name}}"></a>
+    </div>
+    {% endfor %}
+  </div>
+  </section>
+  {% endfor %}
+
+</section>
+  <hr>
 <footer>
 <section class="end">
     <div>

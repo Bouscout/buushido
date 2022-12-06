@@ -61,6 +61,8 @@ document.addEventListener('DOMContentLoaded', e =>{
     var vette = document.getElementById("gallerie2") ;
     var b = 1000 ;
    }else{
+    $('#pc_view').css('display', 'none') ; 
+    $('#mob_view').css('display', 'grid') ; 
     var vette = document.getElementById("gallerie") ;
     var b = 250
     }

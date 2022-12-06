@@ -15,17 +15,17 @@ font-size: 15px;}
 }
 @media (max-width: 1000px) {
    
-    body{
-        background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) !important; 
-    }
+ 
     .wrapper{
         --color_anime2 : {{serie.couleur}};
         background-image: linear-gradient(to bottom right, var(--color_anime2), black);
     }
     #shadow{
+        
         box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
     }
     }
+   
     #shadow{
         --color_anime2 : {{serie.couleur}};
     }
@@ -107,18 +107,20 @@ background-position: center enter; background-attachment: fixed;">
 
 <!--The top side is up, bottom side down-->
 
+
 <section style="display: grid; width: 100% ; margin:auto; ">
 
-<div class="grid_container_top">
-    <div><img src="{{serie.tof_url.url}}"></div>
-    <div> <h2>{{serie.name}}</h2>
-    <p style="font-size: 20px; ">{{serie.lesstext}} <span id="more">{{serie.moretext}}</span> <span style="font-weight: bold;" id="points" onclick="text()">show more...</span></p>
-    <h2 ><a class="carte" href="{% url 'redirect' genre=serie.genre_1 %}">{{serie.genre_1}}  </a>
-        <a class="carte" href="{% url 'redirect' genre=serie.genre_2 %}">{{serie.genre_2}}  </a>
-        <a class="carte" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_3}}</a>
-        <a class="carte" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_4}}</a></h2>
-</div>
-</div>
+    <div class="grid_container_top">
+        <div><img src="{{serie.tof_url.url}}"></div>
+        <div> <h2>{{serie.name}}</h2>
+        <p style="font-size: 20px; ">{{serie.lesstext}} <span id="more">{{serie.moretext}}</span> <span style="font-weight: bold;" id="points" onclick="text()">show more...</span></p>
+        <div style="display: flex; justify-content: space-evenly; font-size: 20px;"><a class="carte" href="{% url 'redirect' genre=serie.genre_1 %}">{{serie.genre_1}}  </a>
+            <a class="carte" href="{% url 'redirect' genre=serie.genre_2 %}">{{serie.genre_2}}  </a>
+            <a class="carte" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_3}}</a>
+            <a class="carte" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_4}}</a>
+    </div>
+    </div>
+    </div>
 
 
 
@@ -150,7 +152,7 @@ background-color: rgba(26, 28, 28, 0.7); ">
 {% if epi.saison %}
 <div>
 <div class="wrapper">
-    <a href="{{epi.ref}}/"><div style="pointer-events: none; outline: none; border: none;"><iframe src={{epi.url|safe}} allowfullscreen frameBorder="0"></iframe></div ></a>
+  <div style="margin: 15px;" id="shadow"><a href="{{epi.ref}}/"><div style="pointer-events: none; outline: none; border: none;"><iframe src={{epi.url|safe}} allowfullscreen frameBorder="0"></iframe></div></a></div>
     <div>
     <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size :80% ;">{{serie.name}}</h3>
     <h3> saison <span class="saison">{{epi.saison}}</span> episode {{epi.episode}}</h3>    

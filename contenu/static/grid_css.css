@@ -49,7 +49,7 @@ scale: 0.9;
     transform: translateY(-3px) scale(1.1);
 }
 #shadow:hover{
-    box-shadow: 20px 20px 50px 15px rgb(249, 249, 249);
+    box-shadow: 20px 20px 50px 15px rgb(194, 193, 193);
     transform: translateY(-3px) scale(1.1);
 }
 
@@ -195,6 +195,8 @@ text-align: center;
         /*grid-template-columns: 650px auto;*/
         grid-template-rows: auto auto;
         grid-template-columns: auto;
+        max-width: 400px;
+        margin: auto;
         justify-content: center;
         justify-items: center;
     }
