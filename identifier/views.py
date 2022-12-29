@@ -59,7 +59,8 @@ def add_watchlist(request, choix):
         return redirect('home')
     return render(request, 'watchlist.html', {'videos':videos, 'genres':genres})
     
-
+def test(request):
+    return render(request, 'maintenance.html')
 
     
 # Create your views here.

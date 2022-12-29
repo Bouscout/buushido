@@ -35,18 +35,13 @@ transform: scale(1.05);
 }    
 
 .categorie{
-/*    background-image: radial-gradient(rgb(54, 53, 53), black);l
-padding: 0px 80px;
-scale: 0.85;
-    border-radius: 50px;*/
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     width: 100%;
     margin: auto;
-    gap: 5rem;
+    gap: 3rem;
     justify-items: center;
 }
-
 .carte2{
     display: flex;
     flex-direction: column;
@@ -62,9 +57,10 @@ scale: 0.85;
 
 @media screen and (max-width: 1000px) {
     .categorie{
-        scale: 0.95;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        scale: 1.0;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 140px));
      padding : 0px ;
+     justify-content: space-evenly;
      gap: 0.2rem;
      width: 100%;
 }.carte2{font-size: 9px !important; margin-top: 30px;}
@@ -99,7 +95,7 @@ height: 280px !important;}
         gap: 5rem;
         scroll-snap-type: x mandatory;
     } #gallerie2{display: none !important;}
-   
+    .categorie{grid-template-columns: repeat(auto-fit, minmax(100px, 110px));}
     }
     .element{
         scroll-snap-align: start;
@@ -119,18 +115,23 @@ height: 280px !important;}
 
    .info{
     display: none;
-    background-color: rgba(40, 40, 40, 0.824) ;
-    min-width: 200px;
-    min-height: 400px;
+    background-color: rgb(188, 188, 188) ;
+    min-width: 240px;
+    max-width: 250px;
+    min-height: 360px;
+    max-height: 800px;
     z-index: 10;
+    animation: info 300ms linear 0s 1 both;
     border-radius: 25px;
     align-items: center;
     justify-content: center;
-    left: 108%;
+    /* left: -250px; */
     bottom: 100%;
     right: 0;
     top: 0;
-    color: white;
+    left: 108%;
+    
+    color: rgb(26, 26, 26);
     position: absolute;
 }
 /*
@@ -139,9 +140,10 @@ grid-template-rows: auto auto;
 */
 .carte:hover + .info{
     display: grid;
+    grid-template-rows: 300px auto;
    }
 
-   #name{
+#name{
     min-height: 100px;
 }
 @media screen and (max-width: 1000px) {

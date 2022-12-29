@@ -12,7 +12,27 @@
         font-weight: bolder;}
     .onglet{border-radius: 0px;}
 </style>
-<body style="background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) ; background-attachment: fixed ;background-size: cover; "-->
+<script>
+//   var cursor_x = -1;
+// document.onmousemove = function(event)
+// {
+//  cursor_x = event.pageX;
+//    console.log('la souris est : '. cursor_x) ;
+// }
+var elem = document.getElementsByClassName('info') ;
+document.onmousemove = function(event){
+  let mouse = event.clientX ;
+  console.log('les elements sont : ', elem)
+  if(mouse >= 1000)
+    for (let i =0; i < elem.length; i++){
+      elem[i].style.left = '-265px' ;
+    }else{
+      for (let i =0; i < elem.length; i++){
+      elem[i].style.left = '108%' ;  
+    }
+  }
+}
+</script>
 <!--style>
   @keyframes space{
     0%  {background-image: url(/media/space.jpg) ; }
@@ -26,85 +46,97 @@
     animation: space 20s ease-in-out 0s infinite  alternate ;
     color : aqua ;
   }
-  </style>
-  
+</style>
+
 <body style="background-image: linear-gradient(rgba(2, 0, 15, 0.5), rgba(0, 0, 0, 0.427)), url(/media/space.jpg) ;
 background-attachment: fixed ;
-    background-size: cover;
-    animation: space 20s ease-in-out 0s infinite  alternate ;"--> 
-     <style>
+background-size: cover;
+animation: space 20s ease-in-out 0s infinite  alternate ;"--> 
+<style>
       @keyframes move {
-  from{  background-image: url(/media/space.jpg) ; }
+        from{  background-image: url(/media/space.jpg) ; }
    to { background-image: url(/media/moon.jpg) ; }
 
-}
-     </style>
-    <section id="the_head" style="text-align: center; animation: move 10s ease-in-out 2s infinite alternate ;">
-        
+  }
+  </style>
+  <!--------->
+  
+  <!--------->
+    <section id="the_head" style="text-align: center; background-image:url(/media/space.jpg) ; animation: fadein 300ms ease-in-out 0s 2 alternate;">
+      
       <section id="gallerie2">
         {% for elem in affiche.poster.all %}
-        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.poster_tof.url}}"></a></div>
+        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img style="animation: pics 1s ease-in-out 1s 1 both;" src="{{elem.poster_tof.url}}"></a></div>
         {% endfor %}
       </section>
   
       <section id="gallerie" style="display: none;">
         {% for elem in affiche.poster.all %}
-        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.tof_url.url}}"></a></div>
+        <div class="element"><a href="{% url 'redirect_serie' id=elem.id %}"><img style="animation: pics 1s ease-in-out 1s 1 both;" src="{{elem.tof_url.url}}"></a></div>
         {% endfor %}
       </section>
     </section>
-
-
-  <div class="topnav" id="myTopnav">
-    <a href="{% url 'redirect' 'home' %}" class="active"><i class="fa-solid fa-house-chimney-window "></i><span> Home</span></a>
-    <a href="{% url 'agenda' %}"><i class="fa-regular fa-calendar-days "></i><span> Agenda</span></a>
-    <a href="{% url 'redirect' 'Film' %}"><i class="fa-solid fa-clapperboard"></i><span> Film</span></a>
-    <div class="dropdown">
+    
+    
+    <div class="topnav" id="myTopnav">
+      <a href="{% url 'redirect' 'home' %}" class="active"><i class="fa-solid fa-house-chimney-window "></i><span> Home</span></a>
+      <a href="{% url 'agenda' %}"><i class="fa-regular fa-calendar-days "></i><span> Agenda</span></a>
+      <a href="{% url 'redirect' 'Film' %}"><i class="fa-solid fa-clapperboard"></i><span> Film</span></a>
+      <a href="{% url 'redirect' 'mylist' %}"><i class="fa-solid fa-list"></i><span> Ma liste</span></a>
+      <div class="dropdown">
       <button class="dropbtn" onclick="menu()"><i class="fa-brands fa-ioxhost "></i> Categories</button>
       <section class="dropdown-content" id="myDropdown">
         <div style="flex: 1;">
             <a href="{% url 'redirect' 'Action' %}">Action</a>
-      <a href="{% url 'redirect' 'Aventure' %}">Aventure</a>
-      <a href="{% url 'redirect' 'Mystere' %}">Mystere</a>
-      <a href="{% url 'redirect' 'Horreur' %}"></i> Horreur</a>
-      <a href="{% url 'redirect' 'Comedie' %}">Comedie</a>
-      <a href="{% url 'redirect' 'Isekai' %}">Isekai</a>
-    </div><div style="flex: 2;">
-        <a href="{% url 'redirect' 'Drama' %}">Drama</a>
-        <a href="{% url 'redirect' 'Romance' %}">Romance</a>
-      <a href="{% url 'redirect' 'Slice of life' %}">Slice of life</a>
-      <a href="{% url 'redirect' 'Sci-fi' %}">Sci-fi</a>
-      <a href="{% url 'redirect' 'Seinen' %}">Seinen</a>
+            <a href="{% url 'redirect' 'Aventure' %}">Aventure</a>
+            <a href="{% url 'redirect' 'Mystere' %}">Mystere</a>
+            <a href="{% url 'redirect' 'Horreur' %}"></i> Horreur</a>
+            <a href="{% url 'redirect' 'Comedie' %}">Comedie</a>
+            <a href="{% url 'redirect' 'Isekai' %}">Isekai</a>
+            <a href="{% url 'redirect' 'Fantaisie' %}">Fantaisie</a>
+            <a href="{% url 'redirect' 'Thriller' %}">Thriller</a>
+          </div><div style="flex: 2;">
+            <a href="{% url 'redirect' 'Drama' %}">Drama</a>
+            <a href="{% url 'redirect' 'Romance' %}">Romance</a>
+            <a href="{% url 'redirect' 'Slice of life' %}">Slice of life</a>
+            <a href="{% url 'redirect' 'Sci-fi' %}">Sci-fi</a>
+            <a href="{% url 'redirect' 'Seinen' %}">Seinen</a>
       <a href="{% url 'redirect' 'Shonen' %}">Shonen</a>
+      <a href="{% url 'redirect' 'Shojo' %}">Shojo</a>
+      <a href="{% url 'redirect' 'Ecchi' %}">Ecchi</a>
     </div>
-      </section>
-    </div> 
-    <a href="{% url 'tout' %}"><span><i class="fa-solid fa-magnifying-glass"></i> Voir tout</span></a>
-    {% if user %}
-    <a href="{% url 'login' %}"><span><i class="fa-solid fa-user"></i>  {{user.username}}</span></a>
-    {% else %}
-    <a href="{% url 'login' %}"><span><i class="fa-solid fa-user"></i> Log in</span></a>
-    {% endif %}
-    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="menu2()">&#9776;</a>
-  </div>
+  </section>
+</div> 
+<a href="{% url 'ajax' %}"><span><i class="fa-solid fa-magnifying-glass"></i> Rechercher</span></a>
+
+{% if user %}
+<a href="{% url 'login' %}"><span><i class="fa-solid fa-user"></i>  {{user.username}}</span></a>
+{% else %}
+<a href="{% url 'login' %}"><span><i class="fa-solid fa-user"></i> Log in</span></a>
+{% endif %}
+<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="menu2()">&#9776;</a>
+</div>
+<!-- <body style="background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) ; background-attachment: fixed ;background-size: cover; " > -->
+   <!-- <body style="background-image: linear-gradient(to bottom, rgb(20, 0, 44), rgb(18, 18, 18)) ; background-attachment: fixed ;background-size: cover; "> -->
+    <body style="background-image: radial-gradient(rgb(26, 1, 56), #060606) ">
 
   <!-------------------------------------->  
   <!--iframe src="https://embed.lottiefiles.com/animation/127647"></iframe-->   
   <section id="pc_view" style="display: grid; width: 100%; margin: auto;">               
-  {% for onglet in affiche.to_display.all %}
-<section id="ong" style="display: grid; grid-template-rows:auto auto; gap: 0.5px;  margin: auto; width: 100%;">
-<h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1; margin-bottom: -20px; ">{{onglet.name}}</h2>
-<div class="onglet" style="grid-row: 2;">
-{% for serie in onglet.onglet1.all %}
+    {% for onglet, name in onglets %}
+    <section id="ong" style="display: grid; grid-template-rows:auto auto; gap: 0.5px;  margin: auto; width: 100%; overflow: hidden; ">
+      <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1;  ">{{name}}</h2>
+<div class="onglet" style="grid-row: 2; ">
+{% for serie in onglet %}
 <div style="position: relative;">
 <div class="carte">
 <a href="{{serie.id}}/"><img title="{{serie.name}}"  src="{{serie.tof_url.url}}" alt="{{serie.name}}"></a>
-<div id="name"><h2 style="text-align: center;">{{serie.name}}</h2></div>
+<!--div id="name"><h2 style="text-align: center;">{{serie.name}}</h2></div-->
 </div>
 <section class="info">
-  <div>
-    <h2 style="text-align: center;">{{serie.name}}</h2>
-    <p>{{serie.lesstext}}</p>
+  <div style="padding: 20px;">
+    <h2 style="text-align: center; grid-row: 1; overflow: hidden;">{{serie.name}}</h2>
+    <p style="grid-row: 2; overflow: hidden;">{{serie.lesstext}}</p>
     <!--h2 ><a class="carton" href="{% url 'redirect' genre=serie.genre_1 %}">{{serie.genre_1}}  </a><a class="carton" href="{% url 'redirect' genre=serie.genre_2 %}">{{serie.genre_2}}  </a>
       <a class="carton" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_3}}</a><a class="carton" href="{% url 'redirect' genre=serie.genre_3 %}">{{serie.genre_4}}</a></h2-->
   </div>
@@ -113,20 +145,20 @@ background-attachment: fixed ;
 {% endfor %}
 </div>
 </section>
-<hr style="background-color:rgba(57, 57, 60, 0.685); width:70% ;">
+<!--hr style="background-color:rgba(57, 57, 60, 0.685); width:70% ;"-->
 {% endfor %}
-  </section>
+</section>
 
 <!--Petit onglet-->
 <section id="mob_view" style="display:none; width:100%; margin:auto;" >
-  {% for onglet in affiche.to_display.all %}
-  {% if onglet.name == 'Comedie'%}
-  <section style="display:grid; grid-template-rows:auto auto; width:100%; margin:auto; gap:o.5rem;">
-    <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1; margin-bottom: -20px; ">Tendances</h2>
-    <div class="onglet" style="grid-row: 2;">
+  {% for onglet, name in onglets %}
+  {% if name == 'Comedie'%}
+  <section style="display:grid; grid-template-rows:auto auto; width:100%; margin:5px auto; gap:o.5rem; overflow: hidden;">
+   <div style="margin-bottom:20px ;"><h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1;  "><span style="color: black;background-color: rgb(82, 81, 81);  border-radius: 15px; padding: 15px 30px;">Tendances</span></h2></div>
+    <div class="onglet" style="grid-row: 2; gap: 2rem; background:transparent;  ">
       {% for elem in affiche.poster.all %}
-    <div class="carte">
-      <a href="{% url 'redirect_serie' id=elem.id %}"><img src="{{elem.tof_url}}"></a>
+    <div class="carte" >
+      <a href="{% url 'redirect_serie' id=elem.id %}"><img style="width: 160px !important; height: 280px !important;" src="{{elem.tof_url.url}}"></a>
       <div id="name"><h2 style="text-align: center;">{{elem.name}}</h2></div>
     </div>
     {% endfor %}
@@ -134,12 +166,16 @@ background-attachment: fixed ;
   </section>
 
   {% endif %}
-  <section style="display: grid; grid-template-rows:auto auto; margin-top: -35px;">
-    <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1; margin-bottom: -20px; ">{{onglet.name}}</h2>
+  <!-- <margin-top : -33px ;></margin-top> -->
+  <section style="display: grid; grid-template-rows:auto auto;  ">
+    <!-- <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1; color: black;background-color: rgb(90, 90, 90); border-radius: 15px; padding: 10px 65px;  ">{{name}}</h2> -->
+    <div style="overflow: hidden; white-space: nowrap;  "><h3 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1;"><span style="color: black;background-color: rgb(82, 81, 81);  border-radius: 15px; padding: 15px 30px;">{{name}}</span></h3>
+    </div>
+    <!-- <h2 id="nom" style="text-align: center ; font-size: 40px; grid-row: 1;  ">{{name}}</h2> -->
   <div class="petit_onglet" style="grid-row: 2;">
-    {% for serie in onglet.onglet1.all %}
-    <div class="petite_carte">
-      <a href="{{serie.id}}/"><img title="{{serie.name}}"  src="{{serie.tof_url}}" alt="{{serie.name}}"></a>
+    {% for serie in onglet %}
+    <div class="petite_carte" >
+      <a href="{{serie.id}}/"><img title="{{serie.name}}"  src="{{serie.tof_url.url}}" alt="{{serie.name}}"></a>
     </div>
     {% endfor %}
   </div>

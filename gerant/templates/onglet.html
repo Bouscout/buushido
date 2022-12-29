@@ -13,13 +13,34 @@
 <a href="{{x.id}}/"><h2>Onglet : {{x.name}}</h2></a>
 {% endfor %}
 {% endif %}
-
+<a href="{% url 'ordre_onglet' %}"><h1 style="font-size: 20px; color: wheat;">Changer l'ordre des onglets sur la page d'accueil</h1></a>
+{% if supprim %}
+<a href="ordre/"><h1 style="font-size: 20px; color: wheat;">Changer l'ordre des series dans l'onglet</h1></a>
+{% endif %}
 <form method="post">
 {% csrf_token %}
 {{form.as_p}}
 
 <button type="submit">confirmer</button>
 </form>
+
+{% if option %}
+<form method="post">
+    {% csrf_token %}
+    <h1>Definissez l'ordre</h1>
+{% for x in option %}
+<label for="choix">{{x}}</label>
+<select name="choix">
+{% for serie in series %}
+<option value="{{serie.id}}">{{serie}}</option>
+{% endfor %}
+</select>
+{% endfor %}
+
+<button type="submit">Confirmer ordre</button>
+</form>
+{% endif %}
+
 {% if supprim %}
 
 <hr>
@@ -35,6 +56,8 @@
 
 {% endif %}
 </section>
+<hr>
+<a href="{% url 'gerant_accueil' %}"><h1 style="font-size: 30px; text-align: center;">Retour accueil gerant</h1></a>
 </body> 
 {% endblock content %}
 

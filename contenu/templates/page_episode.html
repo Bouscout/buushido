@@ -26,38 +26,52 @@ if (ios() == true){
 }             
     })
 </script>
-{% if serie.background_tof %}
-<body style="background-image: linear-gradient(rgba(27, 2, 2, 0.5), rgba(31, 1, 1, 0.5)), url({{serie.background_tof.url}}) ;
-background-attachment: fixed ;
-    background-size: cover;">
+<style>
+    .ambiance{
+        --color_anime2:{{serie.couleur}};
+        background-image: linear-gradient(to bottom, #101010,#101010, #101010, #101010, var(--color_anime2));
+        background-attachment: fixed;
+    }
+    .wrapper{}
+</style>
+<body class="ambiance">
+<!-- {% if serie.background_tof %}
+<body id="back" style="background-image: radial-gradient(transparent, black), url({{serie.background_tof.url}}) ;
+background-attachment: fixed ;background-size: cover; background-repeat: no-repeat;
+background-position: center enter; background-attachment: fixed;">
     {% else %}
     <body style="background-image: linear-gradient(to bottom, rgb(29, 29, 39), rgb(3, 3, 3)) ;">
-    {% endif %}
+    {% endif %} -->
     <div class="topnav" id="myTopnav">
         <a href="{% url 'redirect' 'home' %}" class="active"><i class="fa-solid fa-house-chimney-window "></i><span> Home</span></a>
         <a href="{% url 'agenda' %}"><i class="fa-regular fa-calendar-days "></i><span> Agenda</span></a>
         <a href="{% url 'redirect' 'Film' %}"><i class="fa-solid fa-clapperboard"></i><span> Film</span></a>
+        <a href="{% url 'redirect' 'mylist' %}"><i class="fa-solid fa-list"></i><span> Ma liste</span></a>
         <div class="dropdown">
           <button class="dropbtn" onclick="menu()"><i class="fa-brands fa-ioxhost "></i> Categories</button>
           <section class="dropdown-content" id="myDropdown">
             <div style="flex: 1;">
                 <a href="{% url 'redirect' 'Action' %}">Action</a>
-          <a href="{% url 'redirect' 'Aventure' %}">Aventure</a>
-          <a href="{% url 'redirect' 'Mystere' %}">Mystere</a>
-          <a href="{% url 'redirect' 'Horreur' %}"></i> Horreur</a>
-          <a href="{% url 'redirect' 'Comedie' %}">Comedie</a>
-          <a href="{% url 'redirect' 'Isekai' %}">Isekai</a>
-        </div><div style="flex: 2;">
-            <a href="{% url 'redirect' 'Drama' %}">Drama</a>
-            <a href="{% url 'redirect' 'Romance' %}">Romance</a>
-          <a href="{% url 'redirect' 'Slice of life' %}">Slice of life</a>
-          <a href="{% url 'redirect' 'Sci-fi' %}">Sci-fi</a>
-          <a href="{% url 'redirect' 'Seinen' %}">Seinen</a>
+                <a href="{% url 'redirect' 'Aventure' %}">Aventure</a>
+                <a href="{% url 'redirect' 'Mystere' %}">Mystere</a>
+                <a href="{% url 'redirect' 'Horreur' %}"></i> Horreur</a>
+                <a href="{% url 'redirect' 'Comedie' %}">Comedie</a>
+                <a href="{% url 'redirect' 'Isekai' %}">Isekai</a>
+                <a href="{% url 'redirect' 'Fantaisie' %}">Fantaisie</a>
+                <a href="{% url 'redirect' 'Thriller' %}">Thriller</a>
+              </div><div style="flex: 2;">
+                <a href="{% url 'redirect' 'Drama' %}">Drama</a>
+                <a href="{% url 'redirect' 'Romance' %}">Romance</a>
+                <a href="{% url 'redirect' 'Slice of life' %}">Slice of life</a>
+                <a href="{% url 'redirect' 'Sci-fi' %}">Sci-fi</a>
+                <a href="{% url 'redirect' 'Seinen' %}">Seinen</a>
           <a href="{% url 'redirect' 'Shonen' %}">Shonen</a>
+          <a href="{% url 'redirect' 'Shojo' %}">Shojo</a>
+          <a href="{% url 'redirect' 'Ecchi' %}">Ecchi</a>
         </div>
           </section>
         </div> 
-        <a href="{% url 'tout' %}"><span><i class="fa-solid fa-magnifying-glass"></i> Voir tout</span></a>
+        <a href="{% url 'ajax' %}"><span><i class="fa-solid fa-magnifying-glass"></i> Rechercher</span></a>
         <a href="{% url 'login' %}"><span><i class="fa-solid fa-user"></i> Log in</span></a>
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="menu2()">&#9776;</a>
       </div>
@@ -74,6 +88,9 @@ background-attachment: fixed ;
 <p style="display: none;">{{epi.url2}}</p>
 <div id="prim">{{epi.url1}}</div>
 <style>
+    #shadow{
+        --color_anime2 : {{serie.couleur}};
+    }
     #epi_top{width: 85%; margin: auto;}
     @media (max-width: 1000px) {
     #epi_top{
@@ -82,26 +99,16 @@ background-attachment: fixed ;
         position: sticky;
         z-index: 20;
     }
-    body{
-        background-image: radial-gradient(rgb(41, 41, 48), rgb(3, 3, 3)) !important; 
-    }
-    .wrapper{
-        --color_anime2 : {{serie.couleur}};
-        background-image: linear-gradient(to bottom right, var(--color_anime2), black);
+   
+   
     }.episode{background-color: black; border: none;}
-    #shadow{
-        margin: 0px;
-        box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
-    }
-    }
-    #shadow{margin: 20px;}
-    #shadow{
-        --color_anime2 : {{serie.couleur}};
-    }
+   
+   
+    
 </style>
 <section id="epi_top">
 <div style="position: relative;;width:100% ;height:100% ; margin:auto;  padding-bottom: 56.25%; font-family: Verdana, Geneva, Tahoma, sans-serif;">    
-    <iframe id="hidden" style="width: 100%; height: 100% !important; position: absolute;" height="100%" width="100%" frameBorder="0" seamless="" allowfullscreen src={{epi.url|safe}}></iframe>
+    <iframe id="hidden" style="width: 100%; height: 100% !important; position: absolute;" height="100%" width="100%" frameBorder="0" seamless="" scrolling="no" allowfullscreen src={{epi.url|safe}}></iframe>
     <div style="width: 80px; height: 80px; position: absolute; opacity: 0; right: 0px; top: 0px;">&nbsp;</div>
 </div>
 </section>
@@ -116,7 +123,7 @@ background-attachment: fixed ;
         {% endif %}
     </div>
 </section>
-    <h2 style="font-size: 20px; font-weight: bolder; text-align: center ;">{{epi.nom}} saison {{epi.saison}} episode {{epi.episode}}</h2>
+    <h2 style="font-size: 20px; font-weight: bolder; text-align: center ; margin-bottom: 20px;">{{epi.nom}} saison {{epi.saison}} episode {{epi.episode}}</h2>
 
 
 
@@ -132,16 +139,19 @@ background-attachment: fixed ;
 
 <!--button onclick="filtrage()">click ici pour tester</button>
 <h4 id="test">la zone de test</h4-->
-
     <section class="grid_container">
         {% for epi in episodes  %}
         {% if epi.saison %}
-        <div>
-        <div class="wrapper">
-            <div id="shadow"><a href="{{epi.ref}}/"><div style="pointer-events: none; outline: none; border: none;"><iframe src={{epi.url|safe}} allowfullscreen frameBorder="0"></iframe></div></a></div>
-            <div>
-            <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size :80% ;">{{serie.name}}</h3>
-            <h3> saison <span class="saison">{{epi.saison}}</span> episode {{epi.episode}}</h3>    
+        
+        <div class="ambiance" id="shadow" style="animation: fadein 300ms ease-in-out 0s 2 alternate;">
+            <a style="grid-row: 1; " href="{{epi.ref}}/"><div style="padding-bottom:-20px; padding-top: 8px; pointer-events: none;"><iframe style="border-radius: 10px;animation: pics 1s ease-in-out 1s 1 both;" src={{epi.url|safe}} allowfullscreen frameBorder="0"></iframe></div></a>
+            <div style="grid-row: 2; line-height: 50%; padding-left: 15px; ">
+            <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size :15px ; text-align: left; ">{{serie.name}}</h3>
+            {% if epi.special %}
+            <h3 style="text-align: left; ">Saison <span class="saison">{{epi.saison}}</span> episode {{epi.episode}} {{epi.special}}</h3>    
+            {% else %}
+            <h3 style="text-align: left; ">Saison <span class="saison">{{epi.saison}}</span> episode {{epi.episode}}</h3>    
+            {% endif %}    
         {% else %}
         <h3>{{serie.name}}</h3> 
             <h3>episode {{epi.episode}}</h3> 
@@ -150,12 +160,12 @@ background-attachment: fixed ;
         
         
         </div>
-        </div>
+        
         {% endfor %}
         </section>
 
 <footer>
-    <section class="end" style="background-image:linear-gradient(to bottom, rgba(6, 1, 40, 0.477), black);">
+    <section class="end">
         <div>
     <h2>Contact</h2>
     <h3>Rejoignez notre discord</h3>

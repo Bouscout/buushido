@@ -49,4 +49,4 @@ class formulaire_video(forms.ModelForm):
 class formulaire_episode(forms.ModelForm):
     class Meta:
         model = la_video
-        fields = ['episode', 'url', 'url2']
+        fields = ['episode', 'url', 'url2', 'special']

@@ -10,7 +10,7 @@ def accueil_gerant(request):
         return redirect('home')
     elif request.user.is_friend != True:
         return redirect('home')
-    videos = video.objects.all()
+    videos = video.objects.all().order_by('name')
     return render(request, 'gerant.html', {'videos':videos})
 
 
@@ -47,7 +47,34 @@ def edit_onglet(request, id):
                 return redirect('onglet')
                 
     return render(request, 'onglet.html', {'form':form , 'supprim':supprim})
-    
+
+def ordre_serie(request, id):
+    ongle = get_object_or_404(onglet, pk=id)
+    series = ongle.onglet1.all()
+    option = [x for x in range(1, len(series)+1)]
+    if request.method == 'POST':
+        liste = request.POST.getlist('choix')
+        for x in range(len(liste)):
+            obj = get_object_or_404(video, pk=int(liste[x]))
+            obj.order_id = x+1
+            obj.save()
+        return redirect('onglet')
+    return render(request, 'onglet.html', {'option':option, 'series':series})
+
+def ordre_onglet(request):
+    affiche = affichage.objects.all()[0]
+    series = affiche.to_display.all()
+    option = [x for x in range(1, len(series)+1)]
+    if request.method == 'POST':
+        liste = request.POST.getlist('choix')
+        for x in range(len(liste)):
+            obj = get_object_or_404(onglet, pk=int(liste[x]))
+            obj.order_id = x+1
+            obj.save()
+        return redirect('onglet')
+    return render(request, 'onglet.html', {'option':option, 'series':series})
+
+
 def diffuser(request):
     if request.user.is_anonymous:
         return redirect('home')
@@ -198,4 +225,21 @@ def modifier_lien(request, id, il):
     
     
     
-
+def poste_auto(request, id):
+    serie = get_object_or_404(video, pk=id)
+    formulaire = formset_factory(formulaire_episode, extra=24)
+    form = formulaire(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            x = request.POST['saison']
+            for cas in form:
+                if len(cas.cleaned_data) > 0 :
+                    print('alors cest :', cas.cleaned_data)
+                    epi =cas.save()
+                    epi.nom = serie
+                    epi.saison = x
+                    epi.get_ref()
+                    epi.fullscreen()
+                    epi.save()
+            return redirect('page_serie', id=id)
+    return render(request, 'postage.html', {'serie':serie, 'form':form})

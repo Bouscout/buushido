@@ -5,6 +5,7 @@ from contenu.models import video
 class onglet(models.Model):
     name = models.CharField(max_length=60, blank=True, null=True)
     onglet1 = models.ManyToManyField(video, blank=True)
+    order_id = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return self.name

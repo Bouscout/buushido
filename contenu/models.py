@@ -4,6 +4,7 @@ from email.policy import default
 from django.db import models
 from django.conf import settings
 from colorfield.fields import ColorField
+from PIL import Image
 
 class video(models.Model):
     name = models.CharField('nom', max_length=100)
@@ -15,6 +16,7 @@ class video(models.Model):
     lesstext = models.TextField(blank=True, null=True)
     moretext = models.TextField(blank=True, null=True)
     couleur = ColorField(default='#f9f5f5')
+    order_id = models.PositiveSmallIntegerField(default=0)
     date = models.DateField(auto_now_add=True, null=True, blank=True)
     genre_choix = (
         ('Action' , 'Action'),
@@ -30,6 +32,13 @@ class video(models.Model):
         ('Isekai', 'Isekai'),
         ('Shonen', 'Shonen'),
         ('Sport', 'Sport'),
+        ('Fantaisie', 'Fantaisie'),
+        ('Shojo', 'Shojo'),
+        ('Thriller', 'Thriller'),
+        ('Combat', 'Combat'),
+        ('School life', 'School life'),
+        ('Music', 'Music'),
+        ('Ecchi', 'Ecchi'),
         ('Autres', 'Autres'),
         ('Film', 'Film'),
     )
@@ -43,6 +52,22 @@ class video(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    #In order to reduce the size of the pics
+    def pic(self):
+        try:
+            photo1 = Image.open(self.tof_url)
+            photo2 = Image.open(self.background_tof)
+            photo1 = photo1.resize((480, 720))
+            photo2 = photo2.resize((1280, 720))
+            photo1.save(self.tof_url.path)
+            photo2.save(self.background_tof.path)
+        except OSError:
+            return
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.pic()
+
     def naming(self):
         self.genres = str(f'{self.genre_1} {self.genre_2} {self.genre_3} {self.genre_4}')
 
@@ -86,6 +111,7 @@ class la_video(models.Model):
     url = models.CharField(max_length = 200, blank=True, null = True)
     url2 = models.CharField(max_length = 200, blank=True, null = True)
     ref = models.PositiveIntegerField(null=True, blank=True)
+    special = models.CharField(max_length=30, default=None, null=True, blank=True)
 
     def __str__(self):
         return str(self.nom) + 'S' + str(self.saison) + ' episode ' + str(self.episode)
@@ -95,6 +121,7 @@ class la_video(models.Model):
 
     def fullscreen(self):
         obj = str(self.url)
+        obj = obj.lower()
         a=0
         b=0
         for i in range(len(obj[5:])) :
@@ -111,6 +138,7 @@ class la_video(models.Model):
             self.url = obj[a:b]
         if self.url2 :
             obj = str(self.url2)
+            obj = obj.lower()
             a=0
             b=0
             for i in range(len(obj[5:])) :

@@ -12,8 +12,10 @@ urlpatterns = [
     path('home/tout/', views.voir_tout, name='tout'),
     path('redirect_serie/<int:id>', views.rediriger_serie, name='redirect_serie'),
     path('home/agenda/', views.agenda, name='agenda'),
+    path('ajax/', views.recherche_ajaz, name='ajax'),
+    path('ajax/<int:id>', views.ajax_redirect, name='ajax_redirect'),
+    path('addwatch/', views.watchlist, name='add_watch'),
     
-
     
 
 

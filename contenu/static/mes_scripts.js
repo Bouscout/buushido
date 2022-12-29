@@ -2,13 +2,14 @@
 
 function menu() {
     $('#myDropdown').addClass('show');
-    $('#myDropdown').slideDown("slow");
+    // $('#myDropdown').slideDown("slow");
   }
   
   // Close the dropdown if the user clicks outside of it
   window.onclick = function(e) {
     if (!e.target.matches('.dropbtn')) {
-      $('#myDropdown').slideUp("slow")
+      // $('#myDropdown').slideUp("slow")
+      $('#myDropdown').removeClass('show')
     
     }
   }
@@ -20,6 +21,11 @@ function menu() {
     } else {
       x.className = "topnav";
     }
+    tempo = x.className
+    x.className += " slideleft" ;
+    console.log('alors le nom est :', x.className);
+    x.className = tempo ;
+    
   }
 
 function text(){
